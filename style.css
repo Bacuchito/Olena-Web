@@ -30,10 +30,10 @@ a { text-decoration: none; }
 .main-card {
     background-color: #d7fb43;
     width: 100%;
-    max-width: 1200px; /* Ancho máximo para que no se vea gigante */
+    max-width: 1500px;  
     display: flex;
     flex-direction: column;
-    border: 4px solid #000000; /* Borde negro opcional */
+    border: 4px solid #000000;
 }
 
 /* --- Header (Logo e Iconos) --- */
@@ -150,7 +150,7 @@ a { text-decoration: none; }
 /* Contenedor con scroll para las galerías */
 .scrollable-content {
     background-color: #ffffff; /* Fondo blanco para las fotos */
-    height: 70vh; /* Altura fija para permitir scroll */
+    height: 80vh; /* Altura fija para permitir scroll */
     overflow-y: auto; /* Activa la barra de desplazamiento vertical */
     border-top: 4px solid #000000;
     border-bottom: 4px solid #000000;
@@ -164,7 +164,7 @@ a { text-decoration: none; }
 /* Bloque de cada proyecto */
 .project-block {
     width: 100%;
-    max-width: 900px;
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -186,18 +186,33 @@ a { text-decoration: none; }
     text-transform: uppercase;
 }
 
-/* La cuadrícula de fotos */
+/* Estilo Masonry (Tipo Pinterest) */
 .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    /* En lugar de una cuadrícula, usamos columnas tipo periódico */
+    column-count: 3; /* Divide el espacio en 3 columnas */
+    column-gap: 20px; /* Espacio entre las columnas verticales */
     width: 100%;
 }
 
 .gallery-grid img {
     width: 100%;
-    height: auto;
+    height: auto; /* Mantiene la proporción de la foto */
     display: block;
+    margin-bottom: 20px; /* Espacio debajo de cada foto para separarlas */
+    /* TRUCO IMPORTANTE: Evita que una foto se parta entre dos columnas */
+    break-inside: avoid; 
+    -webkit-column-break-inside: avoid; /* Para compatibilidad con navegadores */
+}
+
+/* Caso especial para una sola foto grande (se mantiene igual) */
+.single-photo {
+    display: flex; /* Vuelve a usar flex solo para esto */
+    justify-content: center;
+    column-count: auto; /* Anula las columnas */
+}
+.single-photo img {
+    max-width: 100%;
+    margin-bottom: 0;
 }
 
 /* Caso especial para una sola foto grande */
@@ -218,13 +233,15 @@ a { text-decoration: none; }
 
 /* Ajustes Responsive para Commercial */
 @media (max-width: 768px) {
-    .scrollable-content {
-        height: auto;
-        overflow-y: visible;
-        padding: 20px;
-    }
     .gallery-grid {
-        grid-template-columns: 1fr;
+        column-count: 2;
+    }
+}
+
+/* En celulares pequeños, 1 sola columna */
+@media (max-width: 480px) {
+    .gallery-grid {
+        column-count: 1;
     }
 }
 
@@ -326,4 +343,288 @@ a { text-decoration: none; }
   width: 100%;
   height: auto;
   object-fit: cover;
+}
+
+/* ====================================================== */
+/* 5. ESTILO EDITORIAL "SCATTERED" (TIPO REVISTA) */
+/* ====================================================== */
+
+.editorial-layout {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); 
+    grid-auto-rows: minmax(50px, auto);
+    gap: 20px;
+    width: 100%;
+    max-width: 1600px;    
+    margin: 40px auto;
+    position: relative;
+}
+
+.editorial-layout img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    /* Sombra suave para darle profundidad como si fueran fotos pegadas */
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.05); 
+}
+
+/* --- CLASES DE POSICIÓN PARA LAS FOTOS --- */
+/* Estas clases controlan dónde va cada foto en la cuadrícula */
+
+/* Foto 1: Izquierda Abajo (La chica sentada en el suelo) */
+.pos-1 {
+    grid-column: 1 / span 4; /* Ocupa desde la columna 1, ancho 5 */
+    grid-row: 3 / span 5;    /* Empieza en fila 2, alto 6 */
+    margin-left: -120px; /* La movemos un poco a la izquierda */
+    z-index: 2; /* Nivel de capa */
+    transform: rotate(0deg); /* Un toquecito de rotación artístico */
+}
+
+/* Foto 2: Arriba Izquierda (Detalle torso blanco) */
+.pos-2 {
+    grid-column: 4 / span 3;
+    grid-row: 1 / span 4;
+    margin-left: -110px; /* La movemos un poco a la izquierda */
+    z-index: 1; /* Por encima de la foto 1 si se solapan */
+    margin-top: -30px; /* La subimos un poco */
+}
+
+/* Foto 3: Centro Grande (Chica de pie frontal) */
+.pos-3 {
+    grid-column: 6 / span 3;
+    grid-row: 6 / span 8;
+    z-index: 1;
+    height: 100% !important; /* El !important obliga al navegador a obedecer */
+    width: 100%;
+    margin-top: -330px;
+    object-fit: cover; /* Recorta la foto para que no se vea aplastada */
+}
+
+/* Foto 4: Arriba Derecha (Chica vestido negro de pie) */
+.pos-4 {
+    grid-column: 10 / span 4;
+    grid-row: 1 / span 5;
+    margin-left: -50px;
+    z-index: 0;
+    transform: translateY(-20px); /* La subimos un poco */
+}
+
+/* Foto 5: Abajo Derecha (Chica agachada) */
+.pos-5 {
+    grid-column: 10 / span 3;
+    grid-row: 5 / span 4;
+    z-index: 2;
+    margin-top: -70px; /* La bajamos */
+    margin-left: 130px;
+}
+
+.pos-6 {
+    grid-column: 1 / span 9;
+    grid-row: 5 / span 5;
+    margin-left: -300px;
+    margin-top: -190px;
+    z-index: 1;
+    object-fit: cover;
+}
+
+.pos-7 {
+    grid-column: 3 / span 4;
+    grid-row: 5 / span 5;
+    margin-left: 80px;
+    z-index: 1;
+    object-fit: cover;
+}
+
+.pos-8 {
+    grid-column: 7 / span 10;
+    grid-row: 5 / span 5;
+    z-index: 1;
+    margin-left: 270px;
+    margin-top: -100px;
+    object-fit: cover;
+}
+
+.pos-9 {
+    grid-column: 1 / span 9;
+    grid-row: 5 / span 5;
+    margin-left: -400px;
+    margin-top: -190px;
+    z-index: 1;
+    object-fit: cover;
+}   
+
+.pos-10 {
+    grid-column: 3 / span 5;
+    grid-row: 5 / span 5;
+    margin-left: 80px;
+    z-index: 1;
+    object-fit: cover;
+}   
+
+.pos-11 {
+    grid-column: 7 / span 10;
+    grid-row: 5 / span 5;
+    z-index: 1;
+    margin-left: 240px;
+    margin-top: -100px;
+    object-fit: cover;
+}
+
+
+/* --- Título "01" Flotando a la derecha --- */
+.chapter-title {
+    grid-column: 11 / 15;
+    grid-row: 1;
+    font-size: 30px;
+    font-weight: 800;
+    text-align: right;
+    z-index: 10;
+    transform: translateY(-60px);
+}
+
+/* --- Texto del Diseñador (Abajo a la izquierda) --- */
+.designer-info {
+    grid-column: 1 / span 6;
+    grid-row: 9;
+    font-size: 14px;
+    margin-top: 40px;
+    text-align: left;
+}
+
+/* --- RESPONSIVE: En móvil volvemos a una columna simple --- */
+@media (max-width: 768px) {
+    .editorial-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        margin-top: 20px;
+    }
+    
+    .editorial-layout img {
+        transform: none !important; /* Quitamos rotaciones en móvil */
+        margin: 0 !important;
+        box-shadow: none;
+    }
+    
+    .chapter-title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+/* --- ESTILO DUAL (Para Editorial centrado) --- */
+
+.editorial-dual-layout {
+    display: flex;
+    justify-content: center; /* Centra los dos bloques en la pantalla */
+    align-items: center;     /* Alinea verticalmente al centro (clave para que se vea bien) */
+    gap: 60px;               /* Espacio elegante entre la revista y la modelo */
+    width: 100%;
+    max-width: 1200px;       /* Ancho controlado para que no se separen demasiado */
+    margin: 40px auto;
+}
+
+.dual-item {
+    flex: 1; /* Cada foto ocupa el mismo espacio disponible */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dual-item img {
+    width: 100%;
+    height: auto;       /* IMPORTANTE: Mantiene la proporción original, no la deforma */
+    display: block;
+    max-height: 800px;  /* Evita que se vuelvan gigantescas en pantallas muy grandes */
+    object-fit: contain; /* Asegura que se vea la revista completa sin cortes */
+}
+
+/* Texto pequeño debajo de la foto (opcional) */
+.editorial-caption {
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* --- MÓVIL --- */
+@media (max-width: 768px) {
+    .editorial-dual-layout {
+        flex-direction: column; /* Una debajo de otra en celular */
+        gap: 40px;
+    }
+}
+
+/* ====================================================== */
+/* 6. ESTILO COMMERCIAL: FOTOS ÚNICAS APILADAS (STACK) */
+/* ====================================================== */
+
+.single-stack-container {
+    display: flex;
+    flex-direction: column; /* Indica que se apilen verticalmente una bajo otra */
+    align-items: center;    /* Centra las fotos horizontalmente */
+    width: 100%;
+    max-width: 1100px;      /* Ancho máximo controlado para que se vea elegante */
+    margin: 20px auto;      /* Centrado en la página */
+    gap: 80px;              /* ESPACIO ENTRE FOTO Y FOTO (Ajústalo a tu gusto) */
+}
+
+.single-stack-img {
+    width: 100%;            /* La foto intenta ocupar todo el ancho del contenedor */
+    height: auto;           /* Mantiene sus proporciones originales (no se deforma) */
+    display: block;
+    max-height: 95vh;       /* Opcional: Evita que una foto sea más alta que la pantalla */
+    object-fit: contain;    /* Asegura que la foto se vea completa */
+}
+
+/* --- MÓVIL --- */
+@media (max-width: 768px) {
+    .single-stack-container {
+        gap: 40px; /* Menos espacio entre fotos en el celular */
+    }
+}
+
+/* ====================================================== */
+/* 7. ESTILO VETEMENTS (Tarjeta Verde Neón) */
+/* ====================================================== */
+
+.vetements-card {
+    background-color: #d7fb43; /* El verde neón de tu marca */
+    width: 100%;
+    max-width: 700px; /* Un ancho contenido para que parezca un póster */
+    margin: 40px auto; /* Centrado */
+    padding: 40px;     /* Espacio interno alrededor de la foto */
+    text-align: center;
+    box-sizing: border-box; /* Asegura que el padding no deforme el ancho */
+}
+
+.vetements-title {
+    font-family: 'Arial Black', sans-serif; /* Fuente gruesa e impactante */
+    font-size: 50px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 20px; /* Espacio entre título y foto */
+    letter-spacing: -2px; /* Las letras un poco juntas estilo moda */
+    line-height: 1;
+}
+
+.vetements-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Opcional: Si quieres que la foto tenga un borde negro fino como contraste */
+    /* border: 1px solid black; */
+}
+
+/* --- Ajuste para Móvil --- */
+@media (max-width: 768px) {
+    .vetements-card {
+        padding: 20px; /* Menos borde verde en celular */
+        width: 90%;    /* Que no toque los bordes de la pantalla */
+    }
+    .vetements-title {
+        font-size: 35px; /* Texto más pequeño en celular */
+    }
 }
