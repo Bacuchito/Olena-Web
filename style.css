@@ -1,0 +1,329 @@
+/* ====================================================== */
+/* 1. RESET BÁSICO Y CONFIGURACIÓN GENERAL */
+/* ====================================================== */
+body {
+    background-color: #000000; /* Fondo negro de la web */
+    margin: 0;
+    font-family: "Montserrat", Helvetica, sans-serif;
+    min-height: 100vh;
+}
+
+a { text-decoration: none; }
+
+/* ====================================================== */
+/* 2. ESTILOS ARREGLADOS PARA LA PORTADA (INDEX) */
+/* Clases nuevas: .NAV, .main-card, etc. */
+/* ====================================================== */
+
+/* El contenedor principal centra todo en la pantalla */
+.NAV {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh; /* Ocupa al menos toda la altura de la ventana */
+    padding: 20px;     /* Espacio alrededor en móviles */
+    box-sizing: border-box;
+}
+
+/* La tarjeta verde central */
+.main-card {
+    background-color: #d7fb43;
+    width: 100%;
+    max-width: 1200px; /* Ancho máximo para que no se vea gigante */
+    display: flex;
+    flex-direction: column;
+    border: 4px solid #000000; /* Borde negro opcional */
+}
+
+/* --- Header (Logo e Iconos) --- */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 40px;
+}
+
+.logo-group h1 {
+    font-weight: 700;
+    font-size: 24px;
+    color: #000000;
+    margin: 0;
+    line-height: 1.2;
+    letter-spacing: 2px; /* Título elegante con aire */
+    text-transform: uppercase;
+}
+
+.logo-group p {
+    font-weight: 400;
+    font-size: 14px;
+    color: #000000;
+    margin-top: 5px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links img {
+    width: 28px;
+    height: 28px;
+    transition: transform 0.2s;
+}
+
+.social-links img:hover {
+    transform: scale(1.1);
+}
+
+/* --- Imagen Principal (Home) --- */
+.hero-image-container {
+    width: 100%;
+    border-top: 4px solid #000000;
+    border-bottom: 4px solid #000000;
+    overflow: hidden;
+    background-color: black;
+}
+
+.hero-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 75vh;
+    object-fit: cover;
+    object-position: top center; /* Ajustado para no cortar cabezas/manos */
+}
+
+/* --- Menú Inferior (Botones) --- */
+.bottom-menu {
+    display: flex;
+    width: 100%;
+    background-color: #000000;
+    gap: 4px; /* Grosor de la línea divisoria */
+}
+
+.menu-btn {
+    flex: 1; /* Hace que los 3 botones midan lo mismo */
+    background-color: #d7fb43;
+    color: #000000;
+    text-align: center;
+    padding: 25px 10px;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+}
+
+.menu-btn:hover {
+    background-color: #cbeb3d;
+}
+
+/* Estilo para el botón activo (indica en qué página estás) */
+.menu-btn.active {
+    background-color: #000000;
+    color: #d7fb43;
+}
+
+/* --- Versión Móvil General --- */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+    }
+    .social-links {
+        align-self: flex-end;
+        margin-top: -40px;
+    }
+    .bottom-menu {
+        flex-direction: column;
+    }
+    .logo-group h1 { font-size: 20px; }
+}
+
+
+/* ====================================================== */
+/* 3. ESTILOS PARA PÁGINAS INTERNAS (COMMERCIAL) */
+/* ====================================================== */
+
+/* Contenedor con scroll para las galerías */
+.scrollable-content {
+    background-color: #ffffff; /* Fondo blanco para las fotos */
+    height: 70vh; /* Altura fija para permitir scroll */
+    overflow-y: auto; /* Activa la barra de desplazamiento vertical */
+    border-top: 4px solid #000000;
+    border-bottom: 4px solid #000000;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px; /* Espacio entre proyectos */
+}
+
+/* Bloque de cada proyecto */
+.project-block {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Logos de las marcas */
+.brand-logo {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 30px;
+    object-fit: contain;
+}
+
+/* Títulos de texto (cuando no hay logo imagen) */
+.text-logo {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* La cuadrícula de fotos */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Caso especial para una sola foto grande */
+.single-photo {
+    display: flex;
+    justify-content: center;
+}
+.single-photo img {
+    max-width: 100%;
+}
+
+/* Separador visual */
+.divider {
+    width: 50%;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+/* Ajustes Responsive para Commercial */
+@media (max-width: 768px) {
+    .scrollable-content {
+        height: auto;
+        overflow-y: visible;
+        padding: 20px;
+    }
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ====================================================== */
+/* 4. ESTILOS ANTIGUOS (PARA LOOKBOOK / EDITORIAL) */
+/* Se mantienen temporalmente para compatibilidad */
+/* ====================================================== */
+
+.LOOKBOOK, .EDITORIAL-SHOOTING {
+  background-color: #ffffff;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 80px;
+}
+
+.LOOKBOOK { background-color: #d7fb43; }
+
+.LOOKBOOK .frame, .EDITORIAL-SHOOTING .frame-main {
+  width: 100%;
+  padding: 45px 114px;
+}
+
+.LOOKBOOK .div, .EDITORIAL-SHOOTING .div-2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.LOOKBOOK .group, .EDITORIAL-SHOOTING .group {
+  width: 211px;
+  height: 41px;
+}
+
+.LOOKBOOK .text-wrapper, .EDITORIAL-SHOOTING .text-wrapper-1,
+.LOOKBOOK .text-wrapper-2, .EDITORIAL-SHOOTING .text-wrapper-2 {
+  font-family: "Montserrat", Helvetica;
+  color: #000000;
+  margin: 0;
+}
+
+.LOOKBOOK .text-wrapper, .EDITORIAL-SHOOTING .text-wrapper-1 {
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.LOOKBOOK .text-wrapper-2, .EDITORIAL-SHOOTING .text-wrapper-2 {
+  font-weight: 400;
+  font-size: 12.2px;
+}
+
+.LOOKBOOK .group-2, .EDITORIAL-SHOOTING .group-2 {
+  display: flex;
+  gap: 7px;
+}
+
+.LOOKBOOK .instagram, .EDITORIAL-SHOOTING .instagram,
+.LOOKBOOK .mail, .EDITORIAL-SHOOTING .mail {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s;
+}
+
+.LOOKBOOK .group-2 a:hover .instagram,
+.EDITORIAL-SHOOTING .group-2 a:hover .instagram,
+.LOOKBOOK .group-2 a:hover .mail,
+.EDITORIAL-SHOOTING .group-2 a:hover .mail {
+  transform: scale(1.1);
+}
+
+.LOOKBOOK .div-wrapper {
+  width: 100%;
+  max-width: 1440px;
+  padding: 0 114px;
+  margin-top: 10px;
+}
+
+.LOOKBOOK .text-wrapper-3, .LOOKBOOK .text-wrapper-5 {
+  font-family: "Montserrat", Helvetica;
+  font-weight: 600;
+  color: #000000;
+  font-size: 70px;
+  letter-spacing: 0;
+}
+
+.LOOKBOOK .frame-2, .LOOKBOOK .frame-5, .LOOKBOOK .frame-6 {
+  display: grid;
+  gap: 15px;
+  width: 80%;
+  margin: 20px auto 40px auto;
+}
+
+.LOOKBOOK .IMG, .LOOKBOOK .element, .LOOKBOOK .img,
+.LOOKBOOK .IMG-2, .LOOKBOOK .IMG-3, .LOOKBOOK .IMG-4,
+.LOOKBOOK .IMG-5, .LOOKBOOK .IMG-6, .LOOKBOOK .IMG-7,
+.LOOKBOOK .IMG-8, .LOOKBOOK .IMG-9 {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
